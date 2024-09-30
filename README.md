@@ -1,11 +1,11 @@
 # Ex.No: 6               HOLT WINTERS METHOD
-### Date: 
+## Name: NAVEEN KUMAR A
+## Reg no:212221240032
 
+## AIM:
+To implement the Holt Winters Method Model using Python.
 
-
-### AIM:
-
-### ALGORITHM:
+## ALGORITHM:
 1. You import the necessary libraries
 2. You load a CSV file containing daily sales data into a DataFrame, parse the 'date' column as
 datetime, and perform some initial data exploration
@@ -17,16 +17,53 @@ datetime, and perform some initial data exploration
 8. You calculate the mean and standard deviation of the entire sales dataset, then fit a Holt-
 Winters model to the entire dataset and make future predictions
 9. You plot the original sales data and the predictions
-### PROGRAM:
+   
+## PROGRAM:
 
-### OUTPUT:
+### Import the libraries
+```
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.tsa.holtwinters import ExponentialSmoothing
+```
+### Load the dataset
+```
+data=pd.read_csv("/content/AirPassengers.csv")
+data
+```
+### Convert the string format to Date format
+```
+data['Month'] = pd.to_datetime(data['Month'])
+data.set_index('Month', inplace=True)
+```
+### Perform Holt-Winters exponential smoothing
+```
+model = ExponentialSmoothing(data, trend="add", seasonal="add", seasonal_periods=12)
+fit = model.fit()
+```
+### Forecast for the next n steps
+```
+n_steps = 12  
 
+forecast = fit.forecast(steps=n_steps)
+forecast
+```
+### Plot the original data and the forecast
+```
+plt.figure(figsize=(10, 6))
+plt.plot(data.index, data, label='Original Data')
+plt.plot(pd.date_range(start=data.index[-1], periods=n_steps+1, freq='M')[1:], forecast, label='Forecast')
+plt.xlabel('Date')
+plt.ylabel('Value')
+plt.title('Holt-Winters Forecast')
+plt.legend()
+plt.show()
+```
 
-TEST_PREDICTION
+## OUTPUT:
 
+![ts6](https://github.com/Ishu-Vasanth/TSA_EXP6/assets/94154614/d3212f4b-08dc-4d1e-bc48-2eebddce795e)
 
-
-FINAL_PREDICTION
-
-### RESULT:
+## RESULT:
 Thus the program run successfully based on the Holt Winters Method model.
